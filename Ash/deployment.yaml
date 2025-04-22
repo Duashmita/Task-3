@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asdua-deployment
+  labels:
+    app: asdua
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: asdua
+  template:
+    metadata:
+      labels:
+        app: asdua
+    spec:
+      containers:
+      - name: asdua
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 100m
+          requests:
+            memory: 100Mi
+            cpu: 100m
+        volumeMounts: 
+        - mountPath: /pvc
+          name: asdua-task3
+      volumes: 
+      - name: asdua-task3
+        persistentVolumeClaim:
+          claimName: asdua-task3
+        
